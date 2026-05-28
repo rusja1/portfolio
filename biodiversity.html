@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pringles Animation - Lana Ihoshyna</title>
+  <title>Biodiversity in Action Kit - Lana Ihoshyna</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -93,61 +93,57 @@
   <div class="cursor-ring" id="cursor-ring"></div>
   <div class="project-header">
     <a href="index.html#categories" class="back-link">All Work</a>
-    <p class="project-category">Animation · Motion Graphics · 3D · 2024</p>
-    <h1 class="project-title">Pringles <em>Animation</em></h1>
-    <p class="project-intro">A concept advertisement for Pringles. All assets were created in Photoshop, Illustrator, and Blender, then animated and edited in After Effects.</p>
+    <p class="project-category">Design · Print · Science Communication · 2025</p>
+    <h1 class="project-title">Biodiversity in <em>Action Kit</em></h1>
+    <p class="project-intro">An educational resource designed during my Teagasc internship. I led the design, collaborating with researchers to transform scientific material into an engaging, magazine-style set of worksheets connecting classroom learning to real-world biodiversity.</p>
   </div>  <div class="meta-strip">
     <div class="meta-item">
       <span class="meta-label">Year</span>
-      <span class="meta-value">2024</span>
+      <span class="meta-value">2025</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Client</span>
+      <span class="meta-value">Teagasc</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">Type</span>
-      <span class="meta-value">College Project</span>
+      <span class="meta-value">Internship</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">Tools</span>
-      <span class="meta-value">Adobe After Effects · Adobe Illustrator · Adobe Photoshop · Blender</span>
+      <span class="meta-value">Adobe Illustrator · Canva · Microsoft Office 365</span>
     </div>
   </div>
 
   <div class="video-section">
     <div class="video-wrap">
-      <iframe
-        src="https://drive.google.com/file/d/1pBGItqf65meqR1GzO7maTc9Vlx4-Te_s/preview"
-        width="100%"
-        height="100%"
-        allow="autoplay"
-        allowfullscreen
-        style="border:none; display:block;">
-      </iframe>
+     <video id="mainVid" src="Videos/Biodiversity.mp4" preload="none" poster="Images/Biodiversity/bio-poster.jpg" controls></video>
+      <div class="video-play-btn" id="playBtn"><div class="play-icon"></div></div>
     </div>
   </div>
 
   <div class="project-body">
     <div class="body-section">
       <h2>The <em>Brief</em></h2>
-      <p>The brief was to create a concept ad for a real brand, combining 2D and 3D elements. I chose Pringles and built the project to feel like a real commercial, combining modelled 3D assets with 2D illustration and motion design.</p>
+      <p>The Biodiversity in Action Kit was created to support students in connecting classroom science to the biodiversity around them. Working directly with Teagasc researchers, I translated dense scientific material into clear, engaging, magazine-style worksheets designed for use in schools.</p><p>Note: the full print version is not available to share publicly.</p>
     </div>
     <div class="body-section">
-      <h2>My <em>Process</em></h2>
-      <p>I modelled the 3D elements in Blender and created 2D assets in Illustrator and Photoshop. Everything was brought together and animated in After Effects, with attention to pacing and sound-to-image timing to give it a commercial feel.</p>
+      <h2>My <em>Role</em></h2>
+      <p>I led the design end-to-end, collaborating closely with researchers while also coordinating with multiple departments simultaneously. I managed the project independently, from initial content analysis through layout design and final iteration based on gathered feedback.</p>
       <div class="tag-list">
-        <span class="tag">Adobe After Effects</span>
         <span class="tag">Adobe Illustrator</span>
-        <span class="tag">Adobe Photoshop</span>
-        <span class="tag">Blender</span>
-        <span class="tag">Motion Design</span>
-        <span class="tag">3D</span>
-        <span class="tag">Ad Concept</span>
+        <span class="tag">Canva</span>
+        <span class="tag">Print Design</span>
+        <span class="tag">Editorial Design</span>
+        <span class="tag">Science Communication</span>
       </div>
     </div>
   </div>  <div class="next-project">
     <div>
       <p class="next-label">Next Project</p>
-      <a href="futuristic-city.html" class="next-title">Art Piece</a>
+      <a href="moorepark.html" class="next-title">Moorepark Open Day Map</a>
     </div>
-    <a href="futuristic-city.html" class="next-arrow">&#8594;</a>
+    <a href="moorepark.html" class="next-arrow">&#8594;</a>
   </div>  <footer class="page-footer">
     <p>&#169; 2026 Lana Ihoshyna</p>
     <div class="footer-links">
@@ -165,7 +161,13 @@
     const html = document.documentElement;
     html.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
     themeToggle.addEventListener('click', () => { const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; html.setAttribute('data-theme', next); localStorage.setItem('theme', next); });
-
+    // video
+    const vid = document.getElementById('mainVid');
+    const playBtn = document.getElementById('playBtn');
+    playBtn.addEventListener('click', () => { vid.play(); playBtn.classList.add('hidden'); });
+    vid.addEventListener('click', () => { if (!vid.paused) { vid.pause(); } else { vid.play(); playBtn.classList.add('hidden'); } });
+    vid.addEventListener('pause', () => playBtn.classList.remove('hidden'));
+    vid.addEventListener('ended', () => playBtn.classList.remove('hidden'));
   </script>
 </body>
 </html>

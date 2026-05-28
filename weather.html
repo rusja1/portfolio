@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pringles Animation - Lana Ihoshyna</title>
+  <title>Weather Web Platform - Lana Ihoshyna</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -34,15 +34,29 @@
     .meta-item { display: flex; flex-direction: column; gap: 0.3rem; }
     .meta-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-light); }
     .meta-value { font-size: 0.9rem; color: var(--fg); }
-    .video-section { padding: 4rem 3rem; background: var(--card-bg); display: flex; justify-content: center; }
-    .video-wrap { position: relative; width: clamp(500px, 68vw, 900px); aspect-ratio: 16 / 9; background: #000; }
-    .video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel-section { padding: 4rem 0; background: var(--card-bg); overflow: hidden; position: relative; }
+    .carousel-stage-wrap { position: relative; }
+    .carousel-stage { display: flex; align-items: center; justify-content: flex-start; gap: 1.5rem; transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; }
+    .carousel-slide { flex: 0 0 auto; width: clamp(500px, 68vw, 900px); aspect-ratio: 16 / 9; position: relative; background: #000; overflow: hidden; transition: opacity 0.4s ease, transform 0.4s ease; opacity: 0.35; transform: scale(0.96); }
+    .carousel-slide.active { opacity: 1; transform: scale(1); }
+    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; user-select: none; }
+    .carousel-slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel-slide iframe { width: 100%; height: 100%; border: none; display: block; }
     .video-play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: background 0.2s; cursor: none; }
     .video-play-btn:hover { background: rgba(0,0,0,0.15); }
     .video-play-btn.hidden { display: none; }
     .play-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; transition: transform 0.2s, background 0.2s; }
     .video-play-btn:hover .play-icon { transform: scale(1.08); background: rgba(255,255,255,0.25); }
     .play-icon::after { content: ''; width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 20px solid #fff; margin-left: 4px; }
+    .carousel-arrow-prev,
+    .carousel-arrow-next { width: 44px; height: 44px; border: 1px solid var(--border); background: none; color: var(--fg); font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: none; transition: border-color 0.2s, background 0.2s; flex-shrink: 0; }
+    .carousel-arrow-prev:hover, .carousel-arrow-next:hover { border-color: var(--accent-light); background: var(--card-bg); }
+    .carousel-controls { display: flex; justify-content: center; align-items: center; gap: 1.2rem; padding: 1.2rem 3rem; }
+    .carousel-counter { font-size: 0.75rem; letter-spacing: 0.12em; color: var(--muted); min-width: 3rem; text-align: center; }
+    .carousel-counter span { color: var(--fg); }
+    .carousel-dots { display: flex; gap: 6px; align-items: center; }
+    .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); opacity: 0.4; cursor: none; transition: opacity 0.2s, width 0.2s, background 0.2s; }
+    .dot.active { width: 20px; border-radius: 3px; background: var(--accent-light); opacity: 1; }
     .project-body { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; padding: 5rem 3rem; border-top: 1px solid var(--border); }
     .body-section h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 1.2rem; }
     .body-section h2 em { font-style: italic; color: var(--accent-light); }
@@ -61,6 +75,10 @@
     .footer-links a { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--accent-light); }
     @media (max-width: 768px) { .project-header { padding: 6rem 1.5rem 3rem; } .meta-strip { padding: 1.5rem; gap: 1.5rem; } .carousel-controls { padding: 1rem 1.5rem; } .project-body { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; } .next-project { padding: 3rem 1.5rem; } .page-footer { padding: 1.5rem; flex-direction: column; gap: 1rem; } }
+    .figma-section { padding: 4rem 3rem; border-top: 1px solid var(--border); }
+    .figma-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-light); margin-bottom: 1.2rem; }
+    .figma-embed { position: relative; width: 100%; padding-bottom: 56.25%; background: var(--card-bg); border: 1px solid var(--border); }
+    .figma-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
     [data-theme="light"] .project-intro { color: #3d3028; } [data-theme="light"] .body-section p { color: #3d3028; } [data-theme="light"] .meta-value { color: #111111; } [data-theme="light"] .project-title { color: #111111; } [data-theme="light"] .tag { color: #3d3028; border-color: rgba(0,0,0,0.2); } [data-theme="light"] .next-label { color: #3d3028; } [data-theme="light"] .next-arrow { color: #3d3028; } [data-theme="light"] .back-link { color: #3d3028; } [data-theme="light"] .carousel-counter { color: #3d3028; }
 
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 8000; padding: 1rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg); border-bottom: 1px solid var(--border); transition: background 0.45s, border-color 0.45s; }
@@ -93,61 +111,96 @@
   <div class="cursor-ring" id="cursor-ring"></div>
   <div class="project-header">
     <a href="index.html#categories" class="back-link">All Work</a>
-    <p class="project-category">Animation · Motion Graphics · 3D · 2024</p>
-    <h1 class="project-title">Pringles <em>Animation</em></h1>
-    <p class="project-intro">A concept advertisement for Pringles. All assets were created in Photoshop, Illustrator, and Blender, then animated and edited in After Effects.</p>
+    <p class="project-category">UI/UX · Web Development · 2025</p>
+    <h1 class="project-title">Weather Web <em>Platform</em></h1>
+    <p class="project-intro">A collaborative group project where I led both design and development. I created the final high-fidelity Figma prototype based on team research, then built the functional web platform, coding most of the JavaScript logic and all of the CSS.</p>
   </div>  <div class="meta-strip">
     <div class="meta-item">
       <span class="meta-label">Year</span>
-      <span class="meta-value">2024</span>
+      <span class="meta-value">2025</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">Type</span>
-      <span class="meta-value">College Project</span>
+      <span class="meta-value">Group Project</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Role</span>
+      <span class="meta-value">Lead Design and Development</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">Tools</span>
-      <span class="meta-value">Adobe After Effects · Adobe Illustrator · Adobe Photoshop · Blender</span>
+      <span class="meta-value">Figma · HTML · CSS · JavaScript · Miro</span>
     </div>
   </div>
 
-  <div class="video-section">
-    <div class="video-wrap">
-      <iframe
-        src="https://drive.google.com/file/d/1pBGItqf65meqR1GzO7maTc9Vlx4-Te_s/preview"
-        width="100%"
-        height="100%"
-        allow="autoplay"
-        allowfullscreen
-        style="border:none; display:block;">
-      </iframe>
+  <div class="carousel-section">
+    <div class="carousel-stage-wrap">
+      <div class="carousel-stage" id="carouselStage">
+        <div class="carousel-slide">
+          <img src="UX-UI/weather_web_img2.png" alt="Weather platform screen 1" />
+        </div>
+        <div class="carousel-slide">
+          <img src="UX-UI/weather_web_img3.png" alt="Weather platform screen 2" />
+        </div>
+        <div class="carousel-slide">
+          <img src="UX-UI/weather_web_img4.png" alt="Weather platform screen 3" />
+        </div>
+        <div class="carousel-slide">
+          <img src="UX-UI/weather_web_img5.png" alt="Weather platform screen 4" />
+        </div>
+        <div class="carousel-slide">
+          <img src="UX-UI/weather_web_img6.png" alt="Weather platform screen 5" />
+        </div>
+        <div class="carousel-slide">
+          <img src="UX-UI/weather_web_img7.png" alt="Weather platform screen 6" />
+        </div>
+        <div class="carousel-slide">
+          <img src="UX-UI/weather_web_img8.png" alt="Weather platform screen 7" />
+        </div>
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-arrow-prev" id="prevBtn">&#8592;</button>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <span class="carousel-counter"><span id="currentSlide">1</span> / <span id="totalSlides">7</span></span>
+      <button class="carousel-arrow-next" id="nextBtn">&#8594;</button>
     </div>
   </div>
 
   <div class="project-body">
     <div class="body-section">
       <h2>The <em>Brief</em></h2>
-      <p>The brief was to create a concept ad for a real brand, combining 2D and 3D elements. I chose Pringles and built the project to feel like a real commercial, combining modelled 3D assets with 2D illustration and motion design.</p>
+      <p>A responsive weather platform built for Cork, serving different user profiles including farmers, marine users, and outdoor planners. It pulls live forecast data from a real weather API, delivering current conditions, hourly and 7-day forecasts, and a radar map. Users can personalise their dashboard with specialist widgets covering marine conditions, farming indicators, pollen, air quality, and UV, with a chatbot to answer weather queries and help manage alert preferences.
+
+</p><p>We worked directly with the client throughout, incorporating their feedback at each stage of the process.</p>
     </div>
     <div class="body-section">
-      <h2>My <em>Process</em></h2>
-      <p>I modelled the 3D elements in Blender and created 2D assets in Illustrator and Photoshop. Everything was brought together and animated in After Effects, with attention to pacing and sound-to-image timing to give it a commercial feel.</p>
+      <h2>My <em>Role</em></h2>
+      <p>I created the entire Figma prototype from scratch based on the team's research findings, establishing the visual direction and interaction patterns. I then built the functional platform, writing most of the JavaScript logic and all of the CSS, using HTML skeleton components provided by teammates.</p>
       <div class="tag-list">
-        <span class="tag">Adobe After Effects</span>
-        <span class="tag">Adobe Illustrator</span>
-        <span class="tag">Adobe Photoshop</span>
-        <span class="tag">Blender</span>
-        <span class="tag">Motion Design</span>
-        <span class="tag">3D</span>
-        <span class="tag">Ad Concept</span>
+        <span class="tag">Figma</span>
+        <span class="tag">HTML / CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">UI/UX</span>
+        <span class="tag">Prototyping</span>
+        <span class="tag">Miro</span>
       </div>
     </div>
-  </div>  <div class="next-project">
+  </div>
+
+  <div class="figma-section">
+    <p class="figma-label">Figma Prototype</p>
+    <div class="figma-embed">
+      <iframe src="https://embed.figma.com/proto/zoMIfXfmCOf3HPxIjQhtCK/WeatherApp?node-id=29-161&starting-point-node-id=29%3A161&embed-host=share" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="next-project">
     <div>
       <p class="next-label">Next Project</p>
-      <a href="futuristic-city.html" class="next-title">Art Piece</a>
+      <a href="burrow.html" class="next-title">3D Environment</a>
     </div>
-    <a href="futuristic-city.html" class="next-arrow">&#8594;</a>
+    <a href="burrow.html" class="next-arrow">&#8594;</a>
   </div>  <footer class="page-footer">
     <p>&#169; 2026 Lana Ihoshyna</p>
     <div class="footer-links">
@@ -165,7 +218,86 @@
     const html = document.documentElement;
     html.setAttribute('data-theme', localStorage.getItem('theme') || 'dark');
     themeToggle.addEventListener('click', () => { const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; html.setAttribute('data-theme', next); localStorage.setItem('theme', next); });
+    // carousel
+    const stage = document.getElementById('carouselStage');
+    const dotsWrap = document.getElementById('carouselDots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const curEl = document.getElementById('currentSlide');
+    const totEl = document.getElementById('totalSlides');
 
+    const origSlides = Array.from(stage.querySelectorAll('.carousel-slide'));
+    const total = origSlides.length;
+    totEl.textContent = total;
+
+    origSlides.slice().reverse().forEach(s => stage.prepend(s.cloneNode(true)));
+    origSlides.forEach(s => stage.append(s.cloneNode(true)));
+
+    const allSlides = Array.from(stage.querySelectorAll('.carousel-slide'));
+    let pIdx = total;
+    let lIdx = 0;
+    const GAP = 24;
+
+    origSlides.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => moveTo(total + i, i, true));
+      dotsWrap.appendChild(d);
+    });
+
+    function calcOffset(p) {
+      const vw = stage.parentElement.offsetWidth;
+      const sw = allSlides[p].offsetWidth;
+      let x = (vw / 2) - (sw / 2);
+      for (let i = 0; i < p; i++) x -= (allSlides[i].offsetWidth + GAP);
+      return x;
+    }
+
+    function updateUI(p, l) {
+      allSlides.forEach((s, i) => {
+        s.classList.toggle('active', i === p);
+        const img = s.querySelector('img');
+        if (img) img.onclick = () => {
+          if (img.requestFullscreen) img.requestFullscreen();
+          else if (img.webkitRequestFullscreen) img.webkitRequestFullscreen();
+        };
+      });
+      dotsWrap.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === l));
+      curEl.textContent = l + 1;
+    }
+
+    function moveTo(p, l, animated) {
+      pIdx = p; lIdx = l;
+      stage.style.transition = animated ? 'transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+      stage.style.transform = `translateX(${calcOffset(pIdx)}px)`;
+      updateUI(pIdx, lIdx);
+    }
+
+    stage.addEventListener('transitionend', () => {
+      if (pIdx < total || pIdx >= total * 2) {
+        const realP = total + lIdx;
+        stage.style.transition = 'none';
+        stage.style.transform = `translateX(${calcOffset(realP)}px)`;
+        void stage.offsetHeight;
+        pIdx = realP;
+        updateUI(pIdx, lIdx);
+      }
+    });
+
+    function step(dir) {
+      const newL = ((lIdx + dir) % total + total) % total;
+      moveTo(pIdx + dir, newL, true);
+    }
+
+    prevBtn.addEventListener('click', () => step(-1));
+    nextBtn.addEventListener('click', () => step(1));
+    document.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1); });
+    let touchStartX = 0;
+    stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', e => { const diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 40) step(diff > 0 ? 1 : -1); });
+
+    moveTo(total, 0, false);
+    window.addEventListener('resize', () => moveTo(total + lIdx, lIdx, false));
   </script>
 </body>
 </html>
