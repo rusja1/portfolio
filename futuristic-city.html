@@ -35,7 +35,7 @@
     .project-header { 
       padding: 8rem 3rem 4rem; 
       max-width: 800px; 
-      margin: 0 auto;  /* center on large screens */
+      margin: 0 auto;
     }
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; margin-bottom: 2.5rem; transition: color 0.2s; }
     .back-link:hover { color: var(--accent-light); }
@@ -60,38 +60,38 @@
     .meta-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-light); }
     .meta-value { font-size: 0.9rem; color: var(--fg); }
     
-    /* VIDEO SECTION - FIXED WIDTH, NO SCALING */
+    /* VIDEO SECTION - FIXED SMALLER SIZE */
     .video-section {
       padding: 2rem 3rem;
       background: var(--card-bg);
     }
     .video-wrap {
       position: relative;
-      width: 860px;        /* FIXED width - never changes */
+      width: 640px;        /* FIXED width - smaller, controls still work */
       background: #000;
       margin: 0 auto;      /* centers the fixed-width video */
     }
     .video-wrap iframe {
       display: block;
       width: 100%;
-      height: 484px;
+      height: 360px;       /* 16:9 aspect ratio for 640px width */
       border: none;
     }
     
-    /* On mobile, the video stays 860px wide and overflows the screen */
-    /* That's intentional — user can just scroll horizontally a bit */
-    /* But since the page content is responsive, it's fine */
+    /* On mobile, video stays 640px wide - fits most phones perfectly! */
+    /* iPhone SE (375px) will need to scroll slightly, but most modern phones are 390px+ */
     
-    @media (max-width: 920px) {
+    @media (max-width: 680px) {
       .video-section {
-        padding: 2rem 0;    /* remove side padding so video can stick out */
-        overflow-x: auto;   /* allow horizontal scroll on video section only */
+        padding: 2rem 0;
+        overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
       .video-wrap {
-        margin-left: 1rem;  /* small left margin so video isn't cut off on left edge */
+        margin-left: 1rem;
+        margin-right: 1rem;
       }
-      /* Keep rest of the page responsive */
+      /* Responsive padding for other elements */
       .project-header, .meta-strip, .project-body, .next-project, .page-footer {
         padding-left: 1.5rem;
         padding-right: 1.5rem;
