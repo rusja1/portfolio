@@ -39,7 +39,7 @@
     .dropdown-menu a { display: block; padding: 0.65rem 1.2rem; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--fg); transition: background 0.2s; }
     .dropdown-menu a:hover { background: var(--border); }
     .dropdown-label { display: block; padding: 0.4rem 1.2rem 0.2rem; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-light); opacity: 0.7; }
-    .theme-toggle { position: fixed; top: 1.5rem; right: 1.5rem; z-index: 9999; width: 54px; height: 28px; border-radius: 14px; background: var(--card-bg); border: 1px solid var(--border); cursor: pointer; padding: 0; overflow: hidden; transition: border-color 0.3s, background 0.3s; }
+    .theme-toggle { position: relative; z-index: 9000; width: 54px; height: 28px; border-radius: 14px; background: var(--card-bg); border: 1px solid var(--border); cursor: pointer; padding: 0; overflow: hidden; transition: border-color 0.3s, background 0.3s; }
     .theme-toggle:hover { border-color: var(--accent-light); }
     .moon-icon, .sun-icon { position: absolute; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.7; pointer-events: none; }
     .moon-icon { left: 6px; background-image: url('Icons/moon.png'); }
@@ -124,7 +124,7 @@
     .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
     .nav-links a { text-decoration: none; color: var(--fg); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; opacity: 0.55; transition: opacity 0.2s, color 0.45s; }
     .nav-links a:hover { opacity: 1; }
-    nav .theme-toggle { position: relative; top: auto; right: auto; flex-shrink: 0; }
+    nav .theme-toggle { position: relative; flex-shrink: 0; }
 
     /* ══ HAMBURGER ══ */
     .hamburger {
