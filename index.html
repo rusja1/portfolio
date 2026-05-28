@@ -422,11 +422,12 @@
     .reveal.visible { opacity:1; transform:none; }
 
     /* ══ HAMBURGER ══ */
+    /* hamburger — hidden by default, shown in mobile media query */
     .hamburger {
       display: none;
       flex-direction: column; justify-content: center; gap: 5px;
       width: 36px; height: 36px; background: none; border: none;
-      cursor: pointer; padding: 4px; z-index: 9100;
+      cursor: pointer; padding: 4px;
     }
     .hamburger span {
       display: block; width: 22px; height: 1.5px;
@@ -437,28 +438,23 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-    /* ══ MOBILE DRAWER ══ */
+    /* drawer — always fixed, slides off screen by default */
     .nav-drawer {
-      display: none;
       position: fixed; top: 0; right: 0; bottom: 0;
-      width: 75vw; max-width: 300px;
+      width: 75vw; max-width: 280px;
       background: var(--bg);
       border-left: 1px solid var(--border);
       z-index: 9050;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       padding: 5rem 2rem 2rem;
-      gap: 0;
       transform: translateX(100%);
       transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.45s, border-color 0.45s;
+      visibility: hidden;
     }
-    .nav-drawer.open { transform: translateX(0); }
-    .nav-drawer-links {
-      display: flex; flex-direction: column; gap: 0;
-      list-style: none;
-    }
+    .nav-drawer.open { transform: translateX(0); visibility: visible; }
+    .nav-drawer-links { display: flex; flex-direction: column; list-style: none; }
     .nav-drawer-links a {
-      display: block;
-      text-decoration: none; color: var(--fg);
+      display: block; text-decoration: none; color: var(--fg);
       font-family: 'Playfair Display', serif;
       font-size: 1.6rem; font-weight: 400;
       padding: 0.9rem 0;
@@ -467,17 +463,18 @@
     }
     .nav-drawer-links a:hover { color: var(--accent-light); }
     .nav-drawer-bottom {
-      margin-top: auto;
-      font-size: 0.68rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--muted);
+      margin-top: auto; font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
     }
+
+    /* overlay — always in DOM, invisible by default */
     .nav-overlay {
-      display: none;
       position: fixed; inset: 0; z-index: 9040;
-      background: rgba(0,0,0,0.4);
-      opacity: 0; transition: opacity 0.35s;
+      background: rgba(0,0,0,0.45);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s;
     }
-    .nav-overlay.open { opacity: 1; }
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
 
     /* ══ RESPONSIVE ══ */
     @media (max-width: 1000px) {
@@ -498,22 +495,28 @@
       .fc-3 .card-visual,.fc-4 .card-visual,.fc-5 .card-visual { height: 240px; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
 
-      /* category tiles: 2 col, always show names, hide bg images */
-      .cat-tiles { grid-template-columns: repeat(2,1fr); }
+      /* category tiles: 2 col, names only */
+      .cat-tiles { grid-template-columns: repeat(2,1fr); gap: 0.6rem; }
       .cat-tile-bg { display: none; }
       .cat-tile::after { display: none; }
       .cat-tile {
         aspect-ratio: unset;
-        min-height: 80px;
+        min-height: 64px;
         display: flex; align-items: center;
         background: var(--card-bg);
+        border: 1px solid var(--border);
       }
       .cat-tile-label {
         position: relative; bottom: auto; left: auto; right: auto;
-        padding: 1rem;
+        padding: 0.8rem 1rem; width: 100%;
       }
-      .cat-tile-name { color: var(--fg); font-size: 1rem; }
+      .cat-tile-name {
+        color: var(--fg); font-size: 0.95rem;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        display: block;
+      }
       .cat-tile-count { display: none; }
+      .cat-tile-bar { display: none; }
 
       /* footer left aligned */
       footer {
@@ -528,8 +531,6 @@
       /* hamburger visible, desktop links hidden */
       .hamburger { display: flex; }
       .nav-links { display: none; }
-      .nav-drawer { display: flex; }
-      .nav-overlay { display: block; }
     }
   
     /* ══ NAV ══ */
