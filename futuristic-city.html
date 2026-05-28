@@ -35,19 +35,18 @@
     .meta-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-light); }
     .meta-value { font-size: 0.9rem; color: var(--fg); }
     
-    /* VIDEO SECTION – FIXED WIDTH SOLUTION (PRESERVES FULLSCREEN) */
+    /* VIDEO SECTION - Clean, responsive, no overlapping controls */
     .video-section {
       padding: 2rem 3rem;
       background: var(--card-bg);
-      width: 100%;
     }
     .video-wrap {
       position: relative;
       width: 100%;
-      max-width: 860px;     /* Max width for desktop, but can shrink */
-      min-width: auto;      /* Allow shrinking on mobile BUT we'll handle via JS */
+      max-width: 100%;
       background: #000;
       margin: 0 auto;
+      cursor: pointer;
     }
     .video-wrap iframe {
       display: block;
@@ -55,51 +54,95 @@
       height: auto;
       aspect-ratio: 16 / 9;
       border: none;
+      pointer-events: none; /* Disable Drive's native controls */
     }
     
-    /* Mobile: Force minimum width but make parent scrollable - WITHOUT breaking fullscreen */
-    @media (max-width: 860px) {
-      body {
-        overflow-x: hidden;
-      }
+    /* Custom play button overlay */
+    .custom-play-btn {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.3);
+      transition: background 0.2s ease;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .custom-play-btn:hover {
+      background: rgba(0, 0, 0, 0.15);
+    }
+    .custom-play-btn.hidden {
+      display: none;
+    }
+    .play-icon-big {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .custom-play-btn:hover .play-icon-big {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .play-icon-big::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-left: 24px solid #fff;
+      margin-left: 6px;
+    }
+    
+    /* Optional: subtle hint that video is clickable */
+    .video-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .video-wrap:hover::after {
+      opacity: 0;
+    }
+    
+    @media (max-width: 768px) {
       .video-section {
-        padding: 0;
-        overflow-x: auto;
-        overflow-y: visible;
-        -webkit-overflow-scrolling: touch;
-        position: relative;
-        /* CRITICAL: Don't set overflow on body or html, only this container */
-      }
-      .video-wrap {
-        min-width: 860px;     /* Force minimum width on mobile */
-        width: 860px;
-        margin: 0;
         padding: 1rem;
       }
-      /* Keep background consistent */
-      .video-section {
-        background: var(--card-bg);
+      .play-icon-big {
+        width: 60px;
+        height: 60px;
+      }
+      .play-icon-big::after {
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-left: 18px solid #fff;
       }
     }
     
-    /* Desktop: normal centered video */
-    @media (min-width: 861px) {
-      .video-wrap {
-        min-width: auto;
-        width: 100%;
-        max-width: 860px;
-      }
-      .video-section {
-        overflow-x: visible;
-      }
-    }
-    
-    .video-play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: background 0.2s; cursor: none; }
-    .video-play-btn:hover { background: rgba(0,0,0,0.15); }
-    .video-play-btn.hidden { display: none; }
-    .play-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; transition: transform 0.2s, background 0.2s; }
-    .video-play-btn:hover .play-icon { transform: scale(1.08); background: rgba(255,255,255,0.25); }
-    .play-icon::after { content: ''; width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 20px solid #fff; margin-left: 4px; }
     .project-body { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; padding: 5rem 3rem; border-top: 1px solid var(--border); }
     .body-section h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 1.2rem; }
     .body-section h2 em { font-style: italic; color: var(--accent-light); }
@@ -213,8 +256,16 @@
   </div>
 
   <div class="video-section">
-    <div class="video-wrap">
-      <iframe src="https://drive.google.com/file/d/1uS-Y3mwCcTbt-HKPTNCQarc3C0J0wJ6q/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <div class="video-wrap" id="videoWrap">
+      <iframe 
+        id="driveIframe"
+        src="https://drive.google.com/file/d/1uS-Y3mwCcTbt-HKPTNCQarc3C0J0wJ6q/preview?controls=0" 
+        allow="autoplay; fullscreen"
+        allowfullscreen>
+      </iframe>
+      <div class="custom-play-btn" id="customPlayBtn">
+        <div class="play-icon-big"></div>
+      </div>
     </div>
   </div>
 
@@ -253,18 +304,21 @@
   </footer>
   
   <script>
+    // Cursor animation
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursor-ring');
     let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
     document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px'; });
     (function animateRing() { ringX += (mouseX - ringX) * 0.1; ringY += (mouseY - ringY) * 0.1; ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px'; requestAnimationFrame(animateRing); })();
     document.querySelectorAll('a, button').forEach(el => { el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.5)'; ring.style.transform = 'translate(-50%,-50%) scale(1.5)'; ring.style.opacity = '0.2'; }); el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.opacity = '0.4'; }); });
+    
+    // Theme toggle
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
     html.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
     themeToggle.addEventListener('click', () => { const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; html.setAttribute('data-theme', next); localStorage.setItem('theme', next); });
 
-    // Hamburger
+    // Hamburger menu
     const hamburger = document.getElementById('hamburger');
     const navDrawer = document.getElementById('navDrawer');
     const navOverlay = document.getElementById('navOverlay');
@@ -274,20 +328,40 @@
     navOverlay.addEventListener('click', closeDrawer);
     document.querySelectorAll('.drawer-link').forEach(l => l.addEventListener('click', closeDrawer));
     
-    // Fix for fullscreen on iOS when container has overflow
-    const videoSection = document.querySelector('.video-section');
-    const iframe = document.querySelector('.video-wrap iframe');
+    // Video player: hide Drive controls, use custom play button
+    const iframe = document.getElementById('driveIframe');
+    const customPlayBtn = document.getElementById('customPlayBtn');
+    const videoWrap = document.getElementById('videoWrap');
     
-    if (iframe) {
-      iframe.addEventListener('webkitbeginfullscreen', function() {
-        videoSection.style.overflow = 'visible';
-      });
-      iframe.addEventListener('webkitendfullscreen', function() {
-        if (window.innerWidth <= 860) {
-          videoSection.style.overflow = 'auto';
+    let videoPlaying = false;
+    
+    // Function to start video
+    function startVideo() {
+      if (!videoPlaying) {
+        // Method 1: Try to play via Drive's API (best if available)
+        // Method 2: Reload iframe with autoplay parameter
+        const currentSrc = iframe.src;
+        if (currentSrc.indexOf('autoplay=1') === -1) {
+          iframe.src = currentSrc + (currentSrc.indexOf('?') === -1 ? '?autoplay=1' : '&autoplay=1');
         }
-      });
+        videoPlaying = true;
+        customPlayBtn.classList.add('hidden');
+        // Re-enable iframe pointer events so video is interactive
+        iframe.style.pointerEvents = 'auto';
+      }
     }
+    
+    // Click on play button or anywhere on video container starts video
+    customPlayBtn.addEventListener('click', startVideo);
+    videoWrap.addEventListener('click', startVideo);
+    
+    // Also handle fullscreen - remove pointer-events restriction when in fullscreen
+    iframe.addEventListener('webkitbeginfullscreen', function() {
+      iframe.style.pointerEvents = 'auto';
+    });
+    
+    // Note: Due to browser autoplay policies, the video may need user interaction
+    // The play button provides that interaction
   </script>
 </body>
 </html>
