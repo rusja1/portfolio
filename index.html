@@ -518,8 +518,10 @@
         justify-content: space-between; width: 100%;
       }
       .cat-tile-label::after {
-        content: '→'; font-size: 1rem;
-        color: var(--accent-light); flex-shrink: 0;
+        content: ''; flex-shrink: 0;
+        width: 20px; height: 1px;
+        background: var(--accent-light);
+        display: inline-block;
       }
       .cat-tile-name {
         font-family: 'Playfair Display', serif;
