@@ -34,10 +34,14 @@
     .meta-item { display: flex; flex-direction: column; gap: 0.3rem; }
     .meta-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-light); }
     .meta-value { font-size: 0.9rem; color: var(--fg); }
-    .video-section { padding: 2rem 3rem; background: var(--card-bg); display: flex; justify-content: center; overflow-x: auto; }
-    .video-wrap { position: relative; width: 860px; flex-shrink: 0; background: #000; }
+    .video-section { padding: 2rem 3rem; background: var(--card-bg); display: flex; justify-content: center; }
+    .video-wrap { position: relative; width: min(860px, 100%); background: #000; }
     .video-wrap iframe { display: block; width: 100%; height: 484px; border: none; }
     .video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media (max-width: 768px) {
+      .video-section { padding: 1rem; overflow: visible; }
+      .video-wrap { width: 860px; margin: 0 auto; }
+    }
     .video-play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: background 0.2s; cursor: none; }
     .video-play-btn:hover { background: rgba(0,0,0,0.15); }
     .video-play-btn.hidden { display: none; }
