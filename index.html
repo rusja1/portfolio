@@ -70,7 +70,7 @@
 
     /* ══ THEME TOGGLE — fixed top right ══ */
     .theme-toggle {
-      position: relative; z-index: 9000;
+      position: relative;
       width: 54px; height: 28px; border-radius: 14px;
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -425,9 +425,9 @@
     /* hamburger — hidden by default, shown in mobile media query */
     .hamburger {
       display: none;
-      flex-direction: column; justify-content: center; gap: 5px;
       width: 36px; height: 36px; background: none; border: none;
       cursor: pointer; padding: 4px;
+      flex-direction: column; justify-content: center; align-items: center; gap: 5px;
     }
     .hamburger span {
       display: block; width: 22px; height: 1.5px;
@@ -495,26 +495,38 @@
       .fc-3 .card-visual,.fc-4 .card-visual,.fc-5 .card-visual { height: 240px; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
 
-      /* category tiles: 2 col, names only */
-      .cat-tiles { grid-template-columns: repeat(2,1fr); gap: 0.6rem; }
+      /* category tiles: full-width vertical list on mobile */
+      .cat-tiles {
+        display: flex; flex-direction: column; gap: 0;
+      }
       .cat-tile-bg { display: none; }
       .cat-tile::after { display: none; }
       .cat-tile {
         aspect-ratio: unset;
-        min-height: 64px;
         display: flex; align-items: center;
-        background: var(--card-bg);
-        border: 1px solid var(--border);
+        justify-content: space-between;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 0;
+        min-height: unset;
       }
+      .cat-tile:first-child { border-top: 1px solid var(--border); }
       .cat-tile-label {
         position: relative; bottom: auto; left: auto; right: auto;
-        padding: 0.8rem 1rem; width: 100%;
+        padding: 0; display: flex; align-items: center;
+        justify-content: space-between; width: 100%;
+      }
+      .cat-tile-label::after {
+        content: '→'; font-size: 1rem;
+        color: var(--accent-light); flex-shrink: 0;
       }
       .cat-tile-name {
-        color: var(--fg); font-size: 0.95rem;
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        display: block; font-size: 0.78rem; letter-spacing: 0.06em;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem; font-weight: 400;
+        color: var(--fg); display: block;
       }
+      .cat-tile.active .cat-tile-name { color: var(--accent-light); }
       .cat-tile-count { display: none; }
       .cat-tile-bar { display: none; }
 
@@ -529,8 +541,8 @@
       .footer-bottom { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
 
       /* hamburger visible, desktop links hidden */
-      .hamburger { display: flex; }
-      .nav-links { display: none; }
+      .hamburger { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; }
+      .nav-links { display: none !important; }
     }
   
     /* ══ NAV ══ */
@@ -955,7 +967,7 @@
         <p class="about-body">
           I've worked in educational technology, science communication, and institutional design, with experience delivering real-world projects for clients including Teagasc and Crawford College of Art and Design.
         </p>
-        <a href="lana_ihoshyna_cv.pdf" class="btn">Download CV</a>
+        <a href="https://drive.google.com/uc?export=download&id=1U_1Mzod8k6RiX8Ve0oNqpEMGmz7sN-EO" class="btn" target="_blank">Download CV</a>
       </div>
 
     </div>
