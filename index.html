@@ -421,6 +421,64 @@
     .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity:1; transform:none; }
 
+    /* ══ HAMBURGER ══ */
+    .hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      width: 36px; height: 36px; background: none; border: none;
+      cursor: pointer; padding: 4px; z-index: 9100;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--fg); border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease, background 0.45s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ══ MOBILE DRAWER ══ */
+    .nav-drawer {
+      display: none;
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: 75vw; max-width: 300px;
+      background: var(--bg);
+      border-left: 1px solid var(--border);
+      z-index: 9050;
+      flex-direction: column;
+      padding: 5rem 2rem 2rem;
+      gap: 0;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), background 0.45s, border-color 0.45s;
+    }
+    .nav-drawer.open { transform: translateX(0); }
+    .nav-drawer-links {
+      display: flex; flex-direction: column; gap: 0;
+      list-style: none;
+    }
+    .nav-drawer-links a {
+      display: block;
+      text-decoration: none; color: var(--fg);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 400;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.45s;
+    }
+    .nav-drawer-links a:hover { color: var(--accent-light); }
+    .nav-drawer-bottom {
+      margin-top: auto;
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .nav-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 9040;
+      background: rgba(0,0,0,0.4);
+      opacity: 0; transition: opacity 0.35s;
+    }
+    .nav-overlay.open { opacity: 1; }
+
     /* ══ RESPONSIVE ══ */
     @media (max-width: 1000px) {
       .fc-1,.fc-2 { grid-column: 1/-1; }
@@ -430,14 +488,48 @@
       .cat-grid   { grid-template-columns: repeat(2,1fr); }
     }
     @media (max-width: 700px) {
+      /* hide cursor on mobile */
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+
       #work, #categories, #about { padding: 4rem 1.5rem; }
       .fc-1,.fc-2,.fc-3,.fc-4,.fc-5 { grid-column: 1/-1; }
       .fc-1 .card-visual,.fc-2 .card-visual,
       .fc-3 .card-visual,.fc-4 .card-visual,.fc-5 .card-visual { height: 240px; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+      /* category tiles: 2 col, always show names, hide bg images */
       .cat-tiles { grid-template-columns: repeat(2,1fr); }
-      footer { flex-direction: column; gap: 3rem; padding: 4rem 1.5rem; }
+      .cat-tile-bg { display: none; }
+      .cat-tile::after { display: none; }
+      .cat-tile {
+        aspect-ratio: unset;
+        min-height: 80px;
+        display: flex; align-items: center;
+        background: var(--card-bg);
+      }
+      .cat-tile-label {
+        position: relative; bottom: auto; left: auto; right: auto;
+        padding: 1rem;
+      }
+      .cat-tile-name { color: var(--fg); font-size: 1rem; }
+      .cat-tile-count { color: var(--muted); }
+
+      /* footer left aligned */
+      footer {
+        flex-direction: column; gap: 2rem;
+        padding: 4rem 1.5rem;
+        align-items: flex-start;
+      }
+      .footer-cta { text-align: left; width: 100%; }
+      .footer-cta h2 { font-size: clamp(2rem, 10vw, 3rem); }
       .footer-bottom { padding: 1.5rem; flex-direction: column; gap: 0.5rem; }
+
+      /* hamburger visible, desktop links hidden */
+      .hamburger { display: flex; }
+      .nav-links { display: none; }
+      .nav-drawer { display: flex; }
+      .nav-overlay { display: block; }
     }
   
     /* ══ NAV ══ */
@@ -511,7 +603,21 @@
         <div class="toggle-slider"></div>
         <div class="sun-icon"></div>
       </button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </nav>
+
+  <!-- ══ MOBILE DRAWER ══ -->
+  <div class="nav-overlay" id="navOverlay"></div>
+  <nav class="nav-drawer" id="navDrawer">
+    <ul class="nav-drawer-links">
+      <li><a href="#work" class="drawer-link">Work</a></li>
+      <li><a href="#categories" class="drawer-link">Browse</a></li>
+      <li><a href="#about" class="drawer-link">About</a></li>
+    </ul>
+    <p class="nav-drawer-bottom">Lana Ihoshyna · 2026</p>
   </nav>
 
   <!-- ══ BACK TO TOP ══ -->
@@ -908,6 +1014,30 @@
   </div>
 
   <script>
+    // ── Hamburger ──
+    const hamburger = document.getElementById('hamburger');
+    const navDrawer = document.getElementById('navDrawer');
+    const navOverlay = document.getElementById('navOverlay');
+    function openDrawer() {
+      hamburger.classList.add('open');
+      navDrawer.classList.add('open');
+      navOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      hamburger.classList.remove('open');
+      navDrawer.classList.remove('open');
+      navOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    navOverlay.addEventListener('click', closeDrawer);
+    document.querySelectorAll('.drawer-link').forEach(link => {
+      link.addEventListener('click', closeDrawer);
+    });
+
     // ── Cursor ──
     const cursor = document.getElementById('cursor');
     const ring   = document.getElementById('cursor-ring');
