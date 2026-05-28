@@ -484,7 +484,7 @@
       .cat-tiles { grid-template-columns: repeat(3,1fr); }
       .cat-grid   { grid-template-columns: repeat(2,1fr); }
     }
-    @media (max-width: 700px) {
+    @media (max-width: 768px) {
       /* hide cursor on mobile */
       body { cursor: auto; }
       .cursor, .cursor-ring { display: none; }
@@ -513,7 +513,7 @@
       .cat-tile-name {
         color: var(--fg); font-size: 0.95rem;
         white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        display: block;
+        display: block; font-size: 0.78rem; letter-spacing: 0.06em;
       }
       .cat-tile-count { display: none; }
       .cat-tile-bar { display: none; }
