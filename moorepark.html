@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=1024" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Moorepark Open Day Map - Lana Ihoshyna</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,7 +37,7 @@
     .carousel-section { padding: 4rem 0; background: var(--card-bg); overflow: hidden; position: relative; }
     .carousel-stage-wrap { position: relative; }
     .carousel-stage { display: flex; align-items: center; justify-content: flex-start; gap: 1.5rem; transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; }
-    .carousel-slide { flex: 0 0 auto; width: clamp(500px, 68vw, 900px); aspect-ratio: 16 / 9; position: relative; background: #000; overflow: hidden; transition: opacity 0.4s ease, transform 0.4s ease; opacity: 0.35; transform: scale(0.96); }
+    .carousel-slide { flex: 0 0 auto; width: clamp(280px, 90vw, 900px); aspect-ratio: 16 / 9; position: relative; background: #000; overflow: hidden; transition: opacity 0.4s ease, transform 0.4s ease; opacity: 0.35; transform: scale(0.96); }
     .carousel-slide.active { opacity: 1; transform: scale(1); }
     .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; user-select: none; }
     .carousel-slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -184,14 +184,14 @@
           <img src="2D/2D_Open_Day_Map.jpg" alt="Moorepark Open Day Map full view" />
         </div>
         <div class="carousel-slide">
-                <iframe
-        src="https://drive.google.com/file/d/1fv9_pzYyVvJivfhKeGmSWzbaOn1LI2Ha/preview"
-        width="100%"
-        height="100%"
-        allow="autoplay"
-        allowfullscreen
-        style="border:none; display:block; width:100%; height:100%;">
-      </iframe></div>
+          <iframe src="https://player.vimeo.com/video/1199236473?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            title="Animation_Open_Day_Map"
+            allowfullscreen>
+          </iframe>
+        </div>
        
       </div>
     </div>
@@ -347,15 +347,8 @@
     navOverlay.addEventListener('click', closeDrawer);
     document.querySelectorAll('.drawer-link').forEach(l => l.addEventListener('click', closeDrawer));
 
-    // ── Fullscreen for iframe on mobile ──
-    const fsBtn = document.querySelector('.video-fs-btn');
-    if (fsBtn) {
-      fsBtn.addEventListener('click', () => {
-        const wrap = document.querySelector('.video-wrap');
-        if (wrap.requestFullscreen) wrap.requestFullscreen();
-        else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
-      });
-    }
+
   </script>
+  <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>

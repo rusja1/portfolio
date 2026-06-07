@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=1024" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Videos - Lana Ihoshyna</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,7 +37,7 @@
     .carousel-section { padding: 4rem 0; background: var(--card-bg); overflow: hidden; position: relative; }
     .carousel-stage-wrap { position: relative; }
     .carousel-stage { display: flex; align-items: center; justify-content: flex-start; gap: 1.5rem; transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; }
-    .carousel-slide { flex: 0 0 auto; width: clamp(500px, 68vw, 900px); aspect-ratio: 16 / 9; position: relative; background: #000; overflow: hidden; transition: opacity 0.4s ease, transform 0.4s ease; opacity: 0.35; transform: scale(0.96); }
+    .carousel-slide { flex: 0 0 auto; width: clamp(280px, 90vw, 900px); aspect-ratio: 16 / 9; position: relative; background: #000; overflow: hidden; transition: opacity 0.4s ease, transform 0.4s ease; opacity: 0.35; transform: scale(0.96); }
     .carousel-slide.active { opacity: 1; transform: scale(1); }
     .carousel-slide video { width: 100%; height: 100%; object-fit: cover; display: block; cursor: auto; }
     .video-play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: background 0.2s; cursor: none; }
@@ -179,24 +179,22 @@
     <div class="carousel-stage-wrap">
       <div class="carousel-stage" id="carouselStage">
         <div class="carousel-slide">
-                <iframe
-        src="https://drive.google.com/file/d/18UQhbsERF6uqOd3Qr_05V5PXqD17D65O/preview"
-        width="100%"
-        height="100%"
-        allow="autoplay"
-        allowfullscreen
-        style="border:none; display:block; width:100%; height:100%;">
-      </iframe>
+          <iframe src="https://player.vimeo.com/video/1199236769?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            title="International_Day_of_Women_and_Girls_in_Science"
+            allowfullscreen>
+          </iframe>
         </div>
         <div class="carousel-slide">
-                <iframe
-        src="https://drive.google.com/file/d/1zznlRZ9NamgMRspb0MRy1rLYdew8jhrN/preview"
-        width="100%"
-        height="100%"
-        allow="autoplay"
-        allowfullscreen
-        style="border:none; display:block; width:100%; height:100%;">
-      </iframe>
+          <iframe src="https://player.vimeo.com/video/1199236768?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            title="BT_Young_Scientist"
+            allowfullscreen>
+          </iframe>
         </div>
        
       </div>
@@ -344,5 +342,6 @@
       });
     }
   </script>
+  <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>
