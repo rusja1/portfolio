@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=1024" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LockedAway - Lana Ihoshyna</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,7 +37,7 @@
     .carousel-section { padding: 4rem 0; background: var(--card-bg); overflow: hidden; position: relative; }
     .carousel-stage-wrap { position: relative; }
     .carousel-stage { display: flex; align-items: center; justify-content: flex-start; gap: 1.5rem; transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; }
-    .carousel-slide { flex: 0 0 auto; width: clamp(500px, 68vw, 900px); aspect-ratio: 16 / 9; position: relative; background: #000; overflow: hidden; transition: opacity 0.4s ease, transform 0.4s ease; opacity: 0.35; transform: scale(0.96); }
+    .carousel-slide { flex: 0 0 auto; width: clamp(280px, 90vw, 900px); aspect-ratio: 16 / 9; position: relative; background: #000; overflow: hidden; transition: opacity 0.4s ease, transform 0.4s ease; opacity: 0.35; transform: scale(0.96); }
     .carousel-slide.active { opacity: 1; transform: scale(1); }
     .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; user-select: none; }
     .carousel-slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -357,15 +357,7 @@
     navOverlay.addEventListener('click', closeDrawer);
     document.querySelectorAll('.drawer-link').forEach(l => l.addEventListener('click', closeDrawer));
 
-    // ── Fullscreen for iframe on mobile ──
-    const fsBtn = document.querySelector('.video-fs-btn');
-    if (fsBtn) {
-      fsBtn.addEventListener('click', () => {
-        const wrap = document.querySelector('.video-wrap');
-        if (wrap.requestFullscreen) wrap.requestFullscreen();
-        else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
-      });
-    }
+
   </script>
 </body>
 </html>
